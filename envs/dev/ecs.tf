@@ -1,5 +1,4 @@
 //****START MAIN ECS CONFIGURATION****
-//All of the ECS configuration and resources that will be shared between services is created here
 resource "aws_ecs_cluster" "dev-cluster" {
   name = "Example-dev-cluster"
 
@@ -544,7 +543,6 @@ resource "aws_ecs_service" "Example-csv-service-dev" {
     }
 }
 //****END CSV SERVICE CONFIGURATION****
-//****START IMAGE_SERVICE ****
 //****START IMAGESERVICE ****
 resource "aws_iam_role" "Example-imageservice-dev-task-role" {
     name = "Example-imageservice-task-role"
