@@ -1,0 +1,173 @@
+[
+    {
+        "image": "105837088580.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce-service:staging",
+        "name": "Example-ecommerce-service-dev",
+        "essential": true,
+        "portMapphings": [
+            {
+                "containerPort": 80,
+                "hostPort": 80,
+                "protocol": "tcp"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awsfirelens",
+            "options": {
+                "Name": "datadog",
+                "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
+                "provider": "ecs",
+                "dd_service": "Example-ecommerce-service",
+                "Host": "http-intake.logs.datadoghq.com",
+                "TLS": "on",
+                "dd_source": "spring",
+                "dd_tags": "project:fluentbit,env:dev,service:Example-ecommerce-service"
+            }
+        },
+        "secrets": [
+            {
+                "name": "APPLICATION_KEYS",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/APPLICATION_KEYS"
+            },
+            {
+                "name": "DATABASE_PASSWORD",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PASSWORD"
+            },
+            {
+                "name": "DATABASE_PORT",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PORT"
+            },
+            {
+                "name": "DATABASE_SERVER",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_SERVER"
+            },
+            {
+                "name": "DATABASE_USERNAME",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_USERNAME"
+            },
+            {
+                "name": "ExampleWL_KEY",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/ExampleWL_KEY"
+            }
+        ],
+        "environment": [
+            {
+                "name": "AWS_URL",
+                "value": "https://sqs.us-east-1.amazonaws.com"
+            },
+            {
+                "name": "DD_ENV",
+                "value": "dev"
+            },
+            {
+                "name": "DD_SERVICE",
+                "value": "ecommerce-service"
+            },
+            {
+                "name": "DD_VERSION",
+                "value": "1.0.0"
+            },
+            {
+                "name": "ExampleWL_URL",
+                "value": "https://api-dev.Examplewlonline.com/"
+            },
+            {
+                "name": "ExampleWL_VERSION",
+                "value": "v1/"
+            },
+            {
+                "name": "SHUTDOWN_TIMEOUT",
+                "value": ""
+            },
+            {
+                "name": "SQS_URL",
+                "value": "https://sqs.us-east-1.amazonaws.com/105837088580/ecommerce-stag.fifo"
+            }
+        ]
+    },
+    {
+        "image": "datadog/agent:latest",
+        "name": "datadog-agent",
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 8126,
+            "hostPort": 8126,
+            "protocol": "tcp"
+          },
+          {
+            "containerPort": 8125,
+            "hostPort": 8125,
+            "protocol": "udp"
+          }
+        ],
+        "environment": [
+              {
+                "name": "DD_API_KEY",
+                "value": "15b65efe4a3333ce6edd9dc155cffadd"
+              },
+              {
+                "name": "DD_APM_ENABLED",
+                "value": "true"
+              },
+              {
+                "name": "DD_APM_IGNORE_RESOURCES",
+                "value": "GET /health,GET /util/health"
+              },
+              {
+                "name": "DD_APM_NON_LOCAL_TRAFFIC",
+                "value": "true"
+              },
+              {
+                "name": "DD_CONTAINER_EXCLUDE",
+                "value": "name:ecs-agent"
+              },
+              {
+                "name": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC",
+                "value": "true"
+              },
+              {
+                "name": "DD_EXPVAR_PORT",
+                "value": "5100"
+              },
+              {
+                "name": "DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL",
+                "value": "true"
+              },
+              {
+                "name": "DD_LOGS_ENABLED",
+                "value": "true"
+              },
+              {
+                "name": "DD_LOGS_INJECTION",
+                "value": "true"
+              },
+              {
+                "name": "DD_PROFILING_ENABLED",
+                "value": "true"
+              },
+              {
+                "name": "DD_SITE",
+                "value": "datadoghq.com"
+              },
+              {
+                "name": "DD_TRACE_SAMPLE_RATE",
+                "value": "1"
+              },
+              {
+                "name": "ECS_FARGATE",
+                "value": "true"
+              }
+          ]
+      },
+      {
+        "image": "amazon/aws-for-fluent-bit:stable",
+        "name": "log_router",
+        "essential": true,
+        "firelensConfiguration": {
+          "type": "fluentbit",
+          "options": {
+              "enable-ecs-log-metadata": "false"
+          }
+        }
+      }
+]

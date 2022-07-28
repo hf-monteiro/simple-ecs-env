@@ -1,0 +1,173 @@
+[
+    {
+      "image": "897420120792.dkr.ecr.us-east-1.amazonaws.com/Examplewl-shipping:dev",
+      "name": "Example-shipping-dev",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awsfirelens",
+        "options": {
+          "Name": "datadog",
+          "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
+          "provider": "ecs",
+          "dd_service": "Example-shipping",
+          "Host": "http-intake.logs.datadoghq.com",
+          "TLS": "on",
+          "dd_source": "spring",
+          "dd_tags": "project:fluentbit,env:dev,service:Example-shipping"
+        }
+      },
+      "secrets": [
+        {
+          "name": "DATABASE_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_password"
+        },
+        {
+          "name": "DATABASE_PORT",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_port"
+        },
+        {
+          "name": "DATABASE_SERVER",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_server"
+        },
+        {
+          "name": "DATABASE_USERNAME",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_username"
+        },
+        {
+          "name": "ExampleWL_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/Examplewl_key"
+        },
+        {
+          "name": "SHIPPO_CLIENT",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/shippo_client"
+        },
+        {
+          "name": "SHIPPO_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/shippo_secret"
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_BUCKET",
+          "value": "Example-ship-labels"
+        },
+        {
+          "name": "AWS_URL",
+          "value": "https://s3.us-east-1.amazonaws.com"
+        },
+        {
+          "name": "DD_ENV",
+          "value": "dev"
+        },
+        {
+          "name": "DD_SERVICE",
+          "value": "shipping"
+        },
+        {
+          "name": "DD_VERSION",
+          "value": "1.0.0"
+        },
+        {
+          "name": "ExampleWL_URL",
+          "value": "https://api-stag.Examplewlonline.com/"
+        },
+        {
+          "name": "ExampleWL_VERSION",
+          "value": "v1/"
+        }
+      ]
+    },
+    {
+      "image": "datadog/agent:latest",
+      "name": "datadog-agent",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8126,
+          "hostPort": 8126,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 8125,
+          "hostPort": 8125,
+          "protocol": "udp"
+        }
+      ],
+      "environment": [
+            {
+              "name": "DD_API_KEY",
+              "value": "15b65efe4a3333ce6edd9dc155cffadd"
+            },
+            {
+              "name": "DD_APM_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_APM_IGNORE_RESOURCES",
+              "value": "GET /health,GET /util/health"
+            },
+            {
+              "name": "DD_APM_NON_LOCAL_TRAFFIC",
+              "value": "true"
+            },
+            {
+              "name": "DD_CONTAINER_EXCLUDE",
+              "value": "name:ecs-agent"
+            },
+            {
+              "name": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC",
+              "value": "true"
+            },
+            {
+              "name": "DD_EXPVAR_PORT",
+              "value": "5100"
+            },
+            {
+              "name": "DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL",
+              "value": "true"
+            },
+            {
+              "name": "DD_LOGS_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_LOGS_INJECTION",
+              "value": "true"
+            },
+            {
+              "name": "DD_PROFILING_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_SITE",
+              "value": "datadoghq.com"
+            },
+            {
+              "name": "DD_TRACE_SAMPLE_RATE",
+              "value": "1"
+            },
+            {
+              "name": "ECS_FARGATE",
+              "value": "true"
+            }
+        ]
+    },
+    {
+      "image": "amazon/aws-for-fluent-bit:stable",
+      "name": "log_router",
+      "essential": true,
+      "firelensConfiguration": {
+        "type": "fluentbit",
+        "options": {
+            "enable-ecs-log-metadata": "false"
+        }
+      }
+    }
+  ]

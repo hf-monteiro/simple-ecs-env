@@ -1,0 +1,16 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-*",
+                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/reportingservice-*",
+                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-*"
+            ]
+        }
+    ]
+}
