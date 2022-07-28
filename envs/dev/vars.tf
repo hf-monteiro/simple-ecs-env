@@ -4,12 +4,12 @@ data "aws_secretsmanager_secret" "secrets" {
 data "aws_secretsmanager_secret_version" "current" {
     secret_id = data.aws_secretsmanager_secret.secrets.id
 }
-data "aws_secretsmanager_secret" "ecommerce" {
+data "aws_secretsmanager_secret" "service01" {
     name = "dev/Example-service02"
 }
 
 data "aws_secretsmanager_secret_version" "ecom-current" {
-    secret_id = data.aws_secretsmanager_secret.ecommerce.id
+    secret_id = data.aws_secretsmanager_secret.service01.id
 }
 data "aws_acm_certificate" "dev-cert" {
     domain = "dev.Examplewlonline.com"
