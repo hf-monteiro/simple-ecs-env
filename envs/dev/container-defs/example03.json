@@ -1,6 +1,6 @@
 [
     {
-      "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-example:dev",
+      "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Example-example:dev",
       "name": "Example-example-dev",
       "essential": true,
       "portMappings": [
@@ -26,31 +26,31 @@
       "secrets": [
         {
           "name": "DATABASE_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_password"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_password"
         },
         {
           "name": "DATABASE_PORT",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_port"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_port"
         },
         {
           "name": "DATABASE_SERVER",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_server"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_server"
         },
         {
           "name": "DATABASE_USERNAME",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_username"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_username"
         },
         {
-          "name": "ExampleWL_KEY",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/Examplewl_key"
+          "name": "Example_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/Example_key"
         },
         {
           "name": "examplePO_CLIENT",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/examplepo_client"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/examplepo_client"
         },
         {
           "name": "examplePO_SECRET",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/examplepo_secret"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/examplepo_secret"
         }
       ],
       "environment": [
@@ -75,11 +75,11 @@
           "value": "1.0.0"
         },
         {
-          "name": "ExampleWL_URL",
-          "value": "https://api-stag.Examplewlonline.com/"
+          "name": "Example_URL",
+          "value": "https://api-dev.Exampleonline.com/"
         },
         {
-          "name": "ExampleWL_VERSION",
+          "name": "Example_VERSION",
           "value": "v1/"
         }
       ]
@@ -103,7 +103,7 @@
       "environment": [
             {
               "name": "DD_API_KEY",
-              "value": "15b65efe4a3333ce6edd9dc155cffadd"
+              "value": "000000000000000000"
             },
             {
               "name": "DD_APM_ENABLED",

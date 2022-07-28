@@ -70,7 +70,7 @@ resource "aws_iam_role" "Example-service01-dev-task-role" {
 resource "aws_iam_policy" "Example-service01-dev-task-policy" {
   name        = "Example-service01-dev-task-policy"
   path        = "/"
-  description = "Grants permissions needed by the Examplewl service01 tasks/service"
+  description = "Grants permissions needed by the Example service01 tasks/service"
   policy      = templatefile("policy-docs/Example-service01-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-service01-bucket.arn })
 }
 
@@ -316,7 +316,7 @@ resource "aws_iam_role" "Example-service03-dev-task-role" {
 resource "aws_iam_policy" "Example-service03-dev-task-policy" {
   name        = "Example-service03-dev-task-policy"
   path        = "/"
-  description = "Grants permissions needed by the Examplewl service03 Service tasks/service"
+  description = "Grants permissions needed by the Example service03 Service tasks/service"
   policy      = templatefile("policy-docs/Example-service03-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-service03-bucket.arn })
 }
 

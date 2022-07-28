@@ -1,6 +1,6 @@
 [
     {
-        "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-service02:staging",
+        "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Example-service02:dev",
         "name": "Example-service02-dev",
         "essential": true,
         "portMapphings": [
@@ -14,7 +14,7 @@
             "logDriver": "awsfirelens",
             "options": {
                 "Name": "Example",
-                "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
+                "apikey": "000000000000000000",
                 "provider": "ecs",
                 "dd_service": "Example-service02",
                 "Host": "http-intake.logs.Examplehq.com",
@@ -26,27 +26,27 @@
         "secrets": [
             {
                 "name": "APPLICATION_KEYS",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/APPLICATION_KEYS"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/APPLICATION_KEYS"
             },
             {
                 "name": "DATABASE_PASSWORD",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_PASSWORD"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/DATABASE_PASSWORD"
             },
             {
                 "name": "DATABASE_PORT",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_PORT"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/DATABASE_PORT"
             },
             {
                 "name": "DATABASE_SERVER",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_SERVER"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/DATABASE_SERVER"
             },
             {
                 "name": "DATABASE_USERNAME",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_USERNAME"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/DATABASE_USERNAME"
             },
             {
-                "name": "ExampleWL_KEY",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/ExampleWL_KEY"
+                "name": "Example_KEY",
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02/Example_KEY"
             }
         ],
         "environment": [
@@ -67,11 +67,11 @@
                 "value": "1.0.0"
             },
             {
-                "name": "ExampleWL_URL",
-                "value": "https://api-dev.Examplewlonline.com/"
+                "name": "Example_URL",
+                "value": "https://api-dev.Exampleonline.com/"
             },
             {
-                "name": "ExampleWL_VERSION",
+                "name": "Example_VERSION",
                 "value": "v1/"
             },
             {
@@ -80,7 +80,7 @@
             },
             {
                 "name": "SQS_URL",
-                "value": "https://sqs.us-east-1.amazonaws.com/000000000000/service01-stag.fifo"
+                "value": "https://sqs.us-east-1.amazonaws.com/000000000000/service01-de.fifo"
             }
         ]
     },

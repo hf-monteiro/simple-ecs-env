@@ -12,7 +12,7 @@ data "aws_secretsmanager_secret_version" "ecom-current" {
     secret_id = data.aws_secretsmanager_secret.service01.id
 }
 data "aws_acm_certificate" "dev-cert" {
-    domain = "dev.Examplewlonline.com"
+    domain = "dev.Exampleonline.com"
 }
 variable "account" {
   type    = string
