@@ -1,6 +1,6 @@
 [
     {
-      "image": "105837088580.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce:develop",
+      "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce:develop",
       "name": "Examplewl-ecommerce-dev",
       "essential": true,
       "portMappings": [
@@ -14,7 +14,7 @@
         "logDriver": "awsfirelens",
         "options": {
           "Name": "Example",
-          "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
+          "apikey": "00000000000",
           "provider": "ecs",
           "dd_service": "Example-ecommerce",
           "Host": "http-intake.logs.Examplehq.com",
@@ -26,51 +26,51 @@
       "secrets":[
         {
             "name": "APPLICATION_KEYS",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/APPLICATION_KEYS"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/APPLICATION_KEYS"
           },
           {
             "name": "AWS_KEY",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/AWS_KEY"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/AWS_KEY"
           },
           {
             "name": "AWS_SECRET",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/AWS_SECRET"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/AWS_SECRET"
           },
           {
             "name": "AWS_URL",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/AWS_URL"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/AWS_URL"
           },
           {
             "name": "DATABASE_PASSWORD",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/DATABASE_PASSWORD"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/DATABASE_PASSWORD"
           },
           {
             "name": "DATABASE_PORT",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/DATABASE_PORT"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/DATABASE_PORT"
           },
           {
             "name": "DATABASE_SERVER",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/DATABASE_SERVER"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/DATABASE_SERVER"
           },
           {
             "name": "DATABASE_USERNAME",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/DATABASE_USERNAME"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/DATABASE_USERNAME"
           },
           {
             "name": "DD_API_KEY",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/DD_API_KEY"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/DD_API_KEY"
           },
           {
             "name": "ExampleWL_KEY",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/ExampleWL_KEY"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/ExampleWL_KEY"
           },
           {
             "name": "ExampleWL_URL",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/ExampleWL_URL"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/ExampleWL_URL"
           },
           {
             "name": "SQS_URL",
-            "valuefrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-IFuJ60/SQS_URL"
+            "valuefrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-IFuJ60/SQS_URL"
           }
     ],
     "environment":[

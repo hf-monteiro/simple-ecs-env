@@ -1,14 +1,14 @@
-//****START SHIPPING SERVICE BUCKET****
-resource "aws_s3_bucket" "Example-shipping-bucket" {
-  bucket = "Example-ship-labels-07-26-2022"
+//****START example SERVICE BUCKET****
+resource "aws_s3_bucket" "Example-example-bucket" {
+  bucket = "Example-example-labels-07-26-2022"
 }
 
-resource "aws_s3_bucket_acl" "Example-shipping-bucket-acl" {
-  bucket = aws_s3_bucket.Example-shipping-bucket.id
+resource "aws_s3_bucket_acl" "Example-example-bucket-acl" {
+  bucket = aws_s3_bucket.Example-example-bucket.id
   acl    = "private"
 }
 
-//****END SHIPPING SERVICE BUCKET
+//****END example SERVICE BUCKET
 
 //****START ONLINE SERVICE BUCKET****
 resource "aws_s3_bucket" "Example-online-server-bucket" {

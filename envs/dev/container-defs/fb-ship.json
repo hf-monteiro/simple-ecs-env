@@ -1,7 +1,7 @@
 [
     {
-      "image": "897420120792.dkr.ecr.us-east-1.amazonaws.com/Examplewl-shipping:dev",
-      "name": "Example-shipping-dev",
+      "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-example:dev",
+      "name": "Example-example-dev",
       "essential": true,
       "portMappings": [
         {
@@ -14,49 +14,49 @@
         "logDriver": "awsfirelens",
         "options": {
           "Name": "Example",
-          "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
+          "apikey": "0000000000000000",
           "provider": "ecs",
-          "dd_service": "Example-shipping",
+          "dd_service": "Example-example",
           "Host": "http-intake.logs.Examplehq.com",
           "TLS": "on",
           "dd_source": "spring",
-          "dd_tags": "project:fluentbit,env:dev,service:Example-shipping"
+          "dd_tags": "project:fluentbit,env:dev,service:Example-example"
         }
       },
       "secrets": [
         {
           "name": "DATABASE_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_password"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_password"
         },
         {
           "name": "DATABASE_PORT",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_port"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_port"
         },
         {
           "name": "DATABASE_SERVER",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_server"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_server"
         },
         {
           "name": "DATABASE_USERNAME",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/database_username"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/database_username"
         },
         {
           "name": "ExampleWL_KEY",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/Examplewl_key"
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/Examplewl_key"
         },
         {
-          "name": "SHIPPO_CLIENT",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/shippo_client"
+          "name": "examplePO_CLIENT",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/examplepo_client"
         },
         {
-          "name": "SHIPPO_SECRET",
-          "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-5HLQu3/shippo_secret"
+          "name": "examplePO_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-5HLQu3/examplepo_secret"
         }
       ],
       "environment": [
         {
           "name": "AWS_BUCKET",
-          "value": "Example-ship-labels"
+          "value": "Example-example-labels"
         },
         {
           "name": "AWS_URL",
@@ -68,7 +68,7 @@
         },
         {
           "name": "DD_SERVICE",
-          "value": "shipping"
+          "value": "example"
         },
         {
           "name": "DD_VERSION",

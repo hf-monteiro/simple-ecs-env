@@ -1,5 +1,5 @@
 data "aws_secretsmanager_secret" "secrets" {
-    name = "dev/Example-shipping"
+    name = "dev/Example-example"
 }
 data "aws_secretsmanager_secret_version" "current" {
     secret_id = data.aws_secretsmanager_secret.secrets.id
@@ -16,7 +16,7 @@ data "aws_acm_certificate" "dev-cert" {
 }
 variable "account" {
   type    = string
-  default = "105837088580"
+  default = "000000000000"
 }
 variable "public-subnets" {
   type = map(any)

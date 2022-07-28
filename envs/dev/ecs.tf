@@ -47,9 +47,9 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-addons-attach
 //****END MAIN ECS CONFIGURATION****
 //****START SERVICE SPECIFIC ECS CONFIGURATION****
 //All service specific resources and configuration should be created here
-//****SHIPPING SERVICE****
-resource "aws_iam_role" "Example-ship-dev-task-role" {
-    name = "Example-ship-task-role"
+//****example SERVICE****
+resource "aws_iam_role" "Example-example-dev-task-role" {
+    name = "Example-example-task-role"
 
   assume_role_policy = <<-EOF
         {
@@ -68,31 +68,31 @@ resource "aws_iam_role" "Example-ship-dev-task-role" {
         EOF
 }
 
-resource "aws_iam_policy" "Example-ship-dev-task-policy" {
-  name        = "Example-ship-dev-task-policy"
+resource "aws_iam_policy" "Example-example-dev-task-policy" {
+  name        = "Example-example-dev-task-policy"
   path        = "/"
-  description = "Grants permissions needed by the Examplewl Shipping tasks/service"
-  policy      = templatefile("policy-docs/Example-ship-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-shipping-bucket.arn })
+  description = "Grants permissions needed by the Examplewl example tasks/service"
+  policy      = templatefile("policy-docs/Example-example-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-example-bucket.arn })
 }
 
-resource "aws_iam_role_policy_attachment" "Example-ship-dev-task-policy-attachment" {
-  role       = aws_iam_role.Example-ship-dev-task-role.name
-  policy_arn = aws_iam_policy.Example-ship-dev-task-policy.arn
+resource "aws_iam_role_policy_attachment" "Example-example-dev-task-policy-attachment" {
+  role       = aws_iam_role.Example-example-dev-task-role.name
+  policy_arn = aws_iam_policy.Example-example-dev-task-policy.arn
 }
-resource "aws_ecs_task_definition" "Example-ship-dev" {
+resource "aws_ecs_task_definition" "Example-example-dev" {
 
-  family                   = "Example-ship-dev"
-  task_role_arn            = aws_iam_role.Example-ship-dev-task-role.arn
+  family                   = "Example-example-dev"
+  task_role_arn            = aws_iam_role.Example-example-dev-task-role.arn
   execution_role_arn       = aws_iam_role.ecs-task-execution-role.arn
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
   requires_compatibilities = ["FARGATE"]
-  container_definitions    = file("container-defs/Example-ship.json")
+  container_definitions    = file("container-defs/Example-example.json")
 }
 
-resource "aws_lb_target_group" "Example-ship-dev-tg" {
-  name        = "Example-ship-dev"
+resource "aws_lb_target_group" "Example-example-dev-tg" {
+  name        = "Example-example-dev"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -103,11 +103,11 @@ resource "aws_lb_target_group" "Example-ship-dev-tg" {
     path    = "/health"
   }
 
-  depends_on = [aws_alb.Example-ship-dev-lb]
+  depends_on = [aws_alb.Example-example-dev-lb]
 }
 
-resource "aws_alb" "Example-ship-dev-lb" {
-  name               = "Example-ship-dev"
+resource "aws_alb" "Example-example-dev-lb" {
+  name               = "Example-example-dev"
   internal           = false
   load_balancer_type = "application"
 
@@ -121,8 +121,8 @@ resource "aws_alb" "Example-ship-dev-lb" {
 }
 
 //We should not be forwarding HTTP requests. Redirect to HTTPS
-resource "aws_alb_listener" "Example-ship-dev-http-listener" {
-  load_balancer_arn = aws_alb.Example-ship-dev-lb.arn
+resource "aws_alb_listener" "Example-example-dev-http-listener" {
+  load_balancer_arn = aws_alb.Example-example-dev-lb.arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -136,22 +136,22 @@ resource "aws_alb_listener" "Example-ship-dev-http-listener" {
   }
 }
 
-resource "aws_alb_listener" "Example-ship-dev-https-listener" {
-  load_balancer_arn = aws_alb.Example-ship-dev-lb.arn
+resource "aws_alb_listener" "Example-example-dev-https-listener" {
+  load_balancer_arn = aws_alb.Example-example-dev-lb.arn
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = data.aws_acm_certificate.dev-cert.arn
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.Example-ship-dev-tg.arn
+    target_group_arn = aws_lb_target_group.Example-example-dev-tg.arn
   }
 }
 
-resource "aws_ecs_service" "Example-ship-dev" {
-  name                               = "Example-shipping-dev"
+resource "aws_ecs_service" "Example-example-dev" {
+  name                               = "Example-example-dev"
   cluster                            = aws_ecs_cluster.dev-cluster.id
-  task_definition                    = aws_ecs_task_definition.Example-ship-dev.arn
+  task_definition                    = aws_ecs_task_definition.Example-example-dev.arn
   desired_count                      = 1
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
@@ -172,7 +172,7 @@ resource "aws_ecs_service" "Example-ship-dev" {
     assign_public_ip = false
   }
 }
-//****END SHIPPING SERVICE****
+//****END example SERVICE****
 //****START ECOMMERCE_SERVICE SERVICE****
 resource "aws_iam_role" "Example-ecommerce-service-dev-task-role" {
     name = "Example-ecommerce-service-task-role"

@@ -7,9 +7,9 @@
                 "secretsmanager:GetSecretValue"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-shipping-*",
-                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/reportingservice-*",
-                "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-*"
+                "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example-*",
+                "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/reportingservice-*",
+                "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-*"
             ]
         }
     ]

@@ -1,6 +1,6 @@
 [
     {
-        "image": "105837088580.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce-service:staging",
+        "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce-service:staging",
         "name": "Example-ecommerce-service-dev",
         "essential": true,
         "portMapphings": [
@@ -26,27 +26,27 @@
         "secrets": [
             {
                 "name": "APPLICATION_KEYS",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/APPLICATION_KEYS"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/APPLICATION_KEYS"
             },
             {
                 "name": "DATABASE_PASSWORD",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PASSWORD"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PASSWORD"
             },
             {
                 "name": "DATABASE_PORT",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PORT"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PORT"
             },
             {
                 "name": "DATABASE_SERVER",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_SERVER"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_SERVER"
             },
             {
                 "name": "DATABASE_USERNAME",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_USERNAME"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_USERNAME"
             },
             {
                 "name": "ExampleWL_KEY",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:897420120792:secret:dev/Example-ecommerce-service-cNgPdh/ExampleWL_KEY"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/ExampleWL_KEY"
             }
         ],
         "environment": [
@@ -80,7 +80,7 @@
             },
             {
                 "name": "SQS_URL",
-                "value": "https://sqs.us-east-1.amazonaws.com/105837088580/ecommerce-stag.fifo"
+                "value": "https://sqs.us-east-1.amazonaws.com/000000000000/ecommerce-stag.fifo"
             }
         ]
     },
@@ -101,10 +101,7 @@
           }
         ],
         "environment": [
-              {
-                "name": "DD_API_KEY",
-                "value": "15b65efe4a3333ce6edd9dc155cffadd"
-              },
+             
               {
                 "name": "DD_APM_ENABLED",
                 "value": "true"

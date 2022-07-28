@@ -6,14 +6,14 @@ resource "aws_db_subnet_group" "private-db-subnets" {
 //****RDS CLUSTER AND INSTANCE CONFIG****
 //All RDS clusters and instances should be created below. They should be grouped by the service
 //and/or application that will use them.
-//****START SHIPPING SERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-ship-dev" {
-  cluster_identifier           = "Example-ship-dev"
+//****START example SERVICE RDS CONFIG****
+resource "aws_rds_cluster" "Example-example-dev" {
+  cluster_identifier           = "Example-example-dev"
   db_subnet_group_name         = aws_db_subnet_group.private-db-subnets.name
   engine                       = "aurora-postgresql"
   engine_version               = "12.8"
   availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  database_name                = "shipping"
+  database_name                = "example"
   master_username              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
   master_password              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
   backup_retention_period      = 7
@@ -23,16 +23,16 @@ resource "aws_rds_cluster" "Example-ship-dev" {
   vpc_security_group_ids       = [aws_security_group.Example-dev-postgres.id]
 }
 
-resource "aws_rds_cluster_instance" "Example-ship-dev-instance-1" {
-    identifier = "Example-ship-dev-1"
-    cluster_identifier = aws_rds_cluster.Example-ship-dev.id
+resource "aws_rds_cluster_instance" "Example-example-dev-instance-1" {
+    identifier = "Example-example-dev-1"
+    cluster_identifier = aws_rds_cluster.Example-example-dev.id
     instance_class = "db.t4g.medium"
-    engine = aws_rds_cluster.Example-ship-dev.engine
-    engine_version = aws_rds_cluster.Example-ship-dev.engine_version
+    engine = aws_rds_cluster.Example-example-dev.engine
+    engine_version = aws_rds_cluster.Example-example-dev.engine_version
     publicly_accessible = false
     db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
 }
-//****END SHIPPING SERVICE RDS CONFIG****
+//****END example SERVICE RDS CONFIG****
 //****START ECOMMERCE SERVICE RDS CONFIG****
 resource "aws_rds_cluster" "Example-integrations-dev" {
     cluster_identifier = "Example-integrations-dev"
@@ -86,7 +86,7 @@ resource "aws_rds_cluster_instance" "Example-report-dev-instance-1" {
   db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
 
 }
-//****END SHIPPING SERVICE RDS CONFIG****
+//****END example SERVICE RDS CONFIG****
 //****START ONLINE-SERVER SERVICE RDS CONFIG****
 resource "aws_rds_cluster" "Example-online-server-dev" {
     cluster_identifier = "Example-online-server-dev"
