@@ -5,7 +5,7 @@ data "aws_secretsmanager_secret_version" "current" {
     secret_id = data.aws_secretsmanager_secret.secrets.id
 }
 data "aws_secretsmanager_secret" "ecommerce" {
-    name = "dev/Example-ecommerce-service"
+    name = "dev/Example-service02"
 }
 
 data "aws_secretsmanager_secret_version" "ecom-current" {
@@ -58,7 +58,7 @@ variable "private-subnets" {
 }
 
 variable broker_name {
-  default = "report-service"  
+  default = "service03-service"  
 }
 
 variable engine_version {

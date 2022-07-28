@@ -1,7 +1,7 @@
 [
     {
-        "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-ecommerce-service:staging",
-        "name": "Example-ecommerce-service-dev",
+        "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Examplewl-service02:staging",
+        "name": "Example-service02-dev",
         "essential": true,
         "portMapphings": [
             {
@@ -16,37 +16,37 @@
                 "Name": "Example",
                 "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
                 "provider": "ecs",
-                "dd_service": "Example-ecommerce-service",
+                "dd_service": "Example-service02",
                 "Host": "http-intake.logs.Examplehq.com",
                 "TLS": "on",
                 "dd_source": "spring",
-                "dd_tags": "project:fluentbit,env:dev,service:Example-ecommerce-service"
+                "dd_tags": "project:fluentbit,env:dev,service:Example-service02"
             }
         },
         "secrets": [
             {
                 "name": "APPLICATION_KEYS",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/APPLICATION_KEYS"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/APPLICATION_KEYS"
             },
             {
                 "name": "DATABASE_PASSWORD",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PASSWORD"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_PASSWORD"
             },
             {
                 "name": "DATABASE_PORT",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_PORT"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_PORT"
             },
             {
                 "name": "DATABASE_SERVER",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_SERVER"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_SERVER"
             },
             {
                 "name": "DATABASE_USERNAME",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/DATABASE_USERNAME"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/DATABASE_USERNAME"
             },
             {
                 "name": "ExampleWL_KEY",
-                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-ecommerce-service-cNgPdh/ExampleWL_KEY"
+                "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-service02-cNgPdh/ExampleWL_KEY"
             }
         ],
         "environment": [
@@ -60,7 +60,7 @@
             },
             {
                 "name": "DD_SERVICE",
-                "value": "ecommerce-service"
+                "value": "service02"
             },
             {
                 "name": "DD_VERSION",

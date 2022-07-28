@@ -5,15 +5,14 @@ resource "aws_db_subnet_group" "private-db-subnets" {
 }
 //****RDS CLUSTER AND INSTANCE CONFIG****
 //All RDS clusters and instances should be created below. They should be grouped by the service
-//and/or application that will use them.
-//****START example SERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-example-dev" {
-  cluster_identifier           = "Example-example-dev"
+//****START example SERVICE01 RDS CONFIG****
+resource "aws_rds_cluster" "Example-service01-dev" {
+  cluster_identifier           = "Example-service01-dev"
   db_subnet_group_name         = aws_db_subnet_group.private-db-subnets.name
   engine                       = "aurora-postgresql"
   engine_version               = "12.8"
   availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  database_name                = "example"
+  database_name                = "service01"
   master_username              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
   master_password              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
   backup_retention_period      = 7
@@ -23,19 +22,19 @@ resource "aws_rds_cluster" "Example-example-dev" {
   vpc_security_group_ids       = [aws_security_group.Example-dev-postgres.id]
 }
 
-resource "aws_rds_cluster_instance" "Example-example-dev-instance-1" {
-    identifier = "Example-example-dev-1"
-    cluster_identifier = aws_rds_cluster.Example-example-dev.id
+resource "aws_rds_cluster_instance" "Example-service01-dev-instance-1" {
+    identifier = "Example-service01-dev-1"
+    cluster_identifier = aws_rds_cluster.Example-service01-dev.id
     instance_class = "db.t4g.medium"
-    engine = aws_rds_cluster.Example-example-dev.engine
-    engine_version = aws_rds_cluster.Example-example-dev.engine_version
+    engine = aws_rds_cluster.Example-service01-dev.engine
+    engine_version = aws_rds_cluster.Example-service01-dev.engine_version
     publicly_accessible = false
     db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
 }
-//****END example SERVICE RDS CONFIG****
-//****START ECOMMERCE SERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-integrations-dev" {
-    cluster_identifier = "Example-integrations-dev"
+//****END example SERVICE01 RDS CONFIG****
+//****START example SERVICE02 RDS CONFIG****
+resource "aws_rds_cluster" "Example-service02-dev" {
+    cluster_identifier = "Example-service02-dev"
     db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
     engine = "aurora-postgresql"
     engine_version = "12.8"
@@ -49,24 +48,24 @@ resource "aws_rds_cluster" "Example-integrations-dev" {
     storage_encrypted = true
     vpc_security_group_ids = [aws_security_group.Example-dev-postgres.id]
 }
-resource "aws_rds_cluster_instance" "Example-integrations-dev-instance-1" {
-    identifier = "Example-integrations-dev-1"
-    cluster_identifier = aws_rds_cluster.Example-integrations-dev.id
+resource "aws_rds_cluster_instance" "Example-service02-dev-instance-1" {
+    identifier = "Example-service02-dev-1"
+    cluster_identifier = aws_rds_cluster.Example-service02-dev.id
     instance_class = "db.t4g.medium"
-    engine = aws_rds_cluster.Example-integrations-dev.engine
-    engine_version = aws_rds_cluster.Example-integrations-dev.engine_version
+    engine = aws_rds_cluster.Example-service02-dev.engine
+    engine_version = aws_rds_cluster.Example-service02-dev.engine_version
     publicly_accessible = false
     db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
 }
-//****END ECOMMERCE SERVICE RDS CONFIG****
-//****START REPORTING SERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-report-dev" {
-  cluster_identifier           = "Example-report-dev"
+//****END example SERVICE02 RDS CONFIG****
+//****START example SERVICE03 RDS CONFIG****
+resource "aws_rds_cluster" "Example-service03-dev" {
+  cluster_identifier           = "Example-service03-dev"
   db_subnet_group_name         = aws_db_subnet_group.private-db-subnets.name
   engine                       = "aurora-postgresql"
   engine_version               = "12.8"
   availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  database_name                = "reporting"
+  database_name                = "service03"
   master_username              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
   master_password              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
   backup_retention_period      = 7
@@ -76,98 +75,14 @@ resource "aws_rds_cluster" "Example-report-dev" {
   vpc_security_group_ids       = [aws_security_group.Example-dev-postgres.id]
 }
 
-resource "aws_rds_cluster_instance" "Example-report-dev-instance-1" {
-  identifier           = "Example-report-dev-1"
-  cluster_identifier   = aws_rds_cluster.Example-report-dev.id
+resource "aws_rds_cluster_instance" "Example-service03-dev-instance-1" {
+  identifier           = "Example-service03-dev-1"
+  cluster_identifier   = aws_rds_cluster.Example-service03-dev.id
   instance_class       = "db.t4g.medium"
-  engine               = aws_rds_cluster.Example-report-dev.engine
-  engine_version       = aws_rds_cluster.Example-report-dev.engine_version
+  engine               = aws_rds_cluster.Example-service03-dev.engine
+  engine_version       = aws_rds_cluster.Example-service03-dev.engine_version
   publicly_accessible  = false
   db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
 
 }
-//****END example SERVICE RDS CONFIG****
-//****START ONLINE-SERVER SERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-online-server-dev" {
-    cluster_identifier = "Example-online-server-dev"
-    db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
-    engine = "aurora-postgresql"
-    engine_version = "12.8"
-    availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-    database_name = "onlineserver"
-    master_username = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
-    master_password = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
-    backup_retention_period = 7
-    preferred_backup_window = "00:00-03:00"
-    preferred_maintenance_window = "sun:03:00-sun:04:00"
-    storage_encrypted = true
-    vpc_security_group_ids = [aws_security_group.Example-dev-postgres.id]
-}
-
-resource "aws_rds_cluster_instance" "Example-online-server-dev-instance-1" {
-    identifier = "Example-online-server-dev-1"
-    cluster_identifier = aws_rds_cluster.Example-online-server-dev.id
-    instance_class = "db.t4g.medium"
-    engine = aws_rds_cluster.Example-online-server-dev.engine
-    engine_version = aws_rds_cluster.Example-online-server-dev.engine_version
-    publicly_accessible = false
-    db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
-
-}
-//****END ONLINE-SERVER SERVICE RDS CONFIG****
-//****START PAYMENTSERVICE RDS CONFIG****
-resource "aws_rds_cluster" "Example-paymentservice-dev" {
-    cluster_identifier = "Example-paymentservice-dev"
-    db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
-    engine = "aurora-postgresql"
-    engine_version = "12.8"
-    availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
-    database_name = "onlineserver"
-    master_username = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
-    master_password = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
-    backup_retention_period = 7
-    preferred_backup_window = "00:00-03:00"
-    preferred_maintenance_window = "sun:03:00-sun:04:00"
-    storage_encrypted = true
-    vpc_security_group_ids = [aws_security_group.Example-dev-postgres.id]
-}
-
-resource "aws_rds_cluster_instance" "Example-paymentservice-dev-instance-1" {
-    identifier = "Example-paymentservice-dev-1"
-    cluster_identifier = aws_rds_cluster.Example-paymentservice-dev.id
-    instance_class = "db.t4g.medium"
-    engine = aws_rds_cluster.Example-paymentservice-dev.engine
-    engine_version = aws_rds_cluster.Example-paymentservice-dev.engine_version
-    publicly_accessible = false
-    db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
-
-}
-//****END PAYMENTSERVICE RDS CONFIG****
-//****START ECOMMERCE RDS CONFIG****
-resource "aws_rds_cluster" "Example-ecommerce-dev" {
-  cluster_identifier           = "Example-ecommerce-dev"
-  db_subnet_group_name         = aws_db_subnet_group.private-db-subnets.name
-  engine                       = "aurora-postgresql"
-  engine_version               = "12.8"
-  availability_zones           = ["us-east-1a", "us-east-1b", "us-east-1c"]
-  database_name                = "ecommerce"
-  master_username              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_username"]
-  master_password              = jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["database_password"]
-  backup_retention_period      = 7
-  preferred_backup_window      = "00:00-03:00"
-  preferred_maintenance_window = "sun:03:00-sun:04:00"
-  storage_encrypted            = true
-  vpc_security_group_ids       = [aws_security_group.Example-dev-postgres.id]
-}
-
-resource "aws_rds_cluster_instance" "Example-ecommerce-dev-instance-1" {
-  identifier           = "Example-ecommerce-dev-1"
-  cluster_identifier   = aws_rds_cluster.Example-ecommerce-dev.id
-  instance_class       = "db.t4g.medium"
-  engine               = aws_rds_cluster.Example-ecommerce-dev.engine
-  engine_version       = aws_rds_cluster.Example-ecommerce-dev.engine_version
-  publicly_accessible  = false
-  db_subnet_group_name = aws_db_subnet_group.private-db-subnets.name
-
-}
-//****END ECOMMERCE RDS CONFIG****
+//****END example SERVICE03 RDS CONFIG****

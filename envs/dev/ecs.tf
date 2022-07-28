@@ -46,9 +46,9 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-addons-attach
 //****END MAIN ECS CONFIGURATION****
 //****START SERVICE SPECIFIC ECS CONFIGURATION****
 //All service specific resources and configuration should be created here
-//****example SERVICE01****
-resource "aws_iam_role" "Example-example-dev-task-role" {
-    name = "Example-example-task-role"
+//****START SERVICE01****
+resource "aws_iam_role" "Example-service01-dev-task-role" {
+    name = "Example-service01-task-role"
 
   assume_role_policy = <<-EOF
         {
@@ -67,31 +67,31 @@ resource "aws_iam_role" "Example-example-dev-task-role" {
         EOF
 }
 
-resource "aws_iam_policy" "Example-example-dev-task-policy" {
-  name        = "Example-example-dev-task-policy"
+resource "aws_iam_policy" "Example-service01-dev-task-policy" {
+  name        = "Example-service01-dev-task-policy"
   path        = "/"
-  description = "Grants permissions needed by the Examplewl example tasks/service"
-  policy      = templatefile("policy-docs/Example-example-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-example-bucket.arn })
+  description = "Grants permissions needed by the Examplewl service01 tasks/service"
+  policy      = templatefile("policy-docs/Example-service01-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-service01-bucket.arn })
 }
 
-resource "aws_iam_role_policy_attachment" "Example-example-dev-task-policy-attachment" {
-  role       = aws_iam_role.Example-example-dev-task-role.name
-  policy_arn = aws_iam_policy.Example-example-dev-task-policy.arn
+resource "aws_iam_role_policy_attachment" "Example-service01-dev-task-policy-attachment" {
+  role       = aws_iam_role.Example-service01-dev-task-role.name
+  policy_arn = aws_iam_policy.Example-service01-dev-task-policy.arn
 }
-resource "aws_ecs_task_definition" "Example-example-dev" {
+resource "aws_ecs_task_definition" "Example-service01-dev" {
 
-  family                   = "Example-example-dev"
-  task_role_arn            = aws_iam_role.Example-example-dev-task-role.arn
+  family                   = "Example-service01-dev"
+  task_role_arn            = aws_iam_role.Example-service01-dev-task-role.arn
   execution_role_arn       = aws_iam_role.ecs-task-execution-role.arn
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
   requires_compatibilities = ["FARGATE"]
-  container_definitions    = file("container-defs/Example-example.json")
+  container_definitions    = file("container-defs/Example-service01.json")
 }
 
-resource "aws_lb_target_group" "Example-example-dev-tg" {
-  name        = "Example-example-dev"
+resource "aws_lb_target_group" "Example-service01-dev-tg" {
+  name        = "Example-service01-dev"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -102,11 +102,11 @@ resource "aws_lb_target_group" "Example-example-dev-tg" {
     path    = "/health"
   }
 
-  depends_on = [aws_alb.Example-example-dev-lb]
+  depends_on = [aws_alb.Example-service01-dev-lb]
 }
 
-resource "aws_alb" "Example-example-dev-lb" {
-  name               = "Example-example-dev"
+resource "aws_alb" "Example-service01-dev-lb" {
+  name               = "Example-service01-dev"
   internal           = false
   load_balancer_type = "application"
 
@@ -120,8 +120,8 @@ resource "aws_alb" "Example-example-dev-lb" {
 }
 
 //We should not be forwarding HTTP requests. Redirect to HTTPS
-resource "aws_alb_listener" "Example-example-dev-http-listener" {
-  load_balancer_arn = aws_alb.Example-example-dev-lb.arn
+resource "aws_alb_listener" "Example-service01-dev-http-listener" {
+  load_balancer_arn = aws_alb.Example-service01-dev-lb.arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -135,22 +135,22 @@ resource "aws_alb_listener" "Example-example-dev-http-listener" {
   }
 }
 
-resource "aws_alb_listener" "Example-example-dev-https-listener" {
-  load_balancer_arn = aws_alb.Example-example-dev-lb.arn
+resource "aws_alb_listener" "Example-service01-dev-https-listener" {
+  load_balancer_arn = aws_alb.Example-service01-dev-lb.arn
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = data.aws_acm_certificate.dev-cert.arn
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.Example-example-dev-tg.arn
+    target_group_arn = aws_lb_target_group.Example-service01-dev-tg.arn
   }
 }
 
-resource "aws_ecs_service" "Example-example-dev" {
-  name                               = "Example-example-dev"
+resource "aws_ecs_service" "Example-service01-dev" {
+  name                               = "Example-service01-dev"
   cluster                            = aws_ecs_cluster.dev-cluster.id
-  task_definition                    = aws_ecs_task_definition.Example-example-dev.arn
+  task_definition                    = aws_ecs_task_definition.Example-service01-dev.arn
   desired_count                      = 1
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
@@ -171,10 +171,10 @@ resource "aws_ecs_service" "Example-example-dev" {
     assign_public_ip = false
   }
 }
-//****END example SERVICE01****
+//****END SERVICE01****
 //****START SERVICE02****
-resource "aws_iam_role" "Example-ecommerce-service-dev-task-role" {
-    name = "Example-ecommerce-service-task-role"
+resource "aws_iam_role" "Example-service02-dev-task-role" {
+    name = "Example-service02-task-role"
 
     assume_role_policy = <<-EOF
         {
@@ -192,29 +192,29 @@ resource "aws_iam_role" "Example-ecommerce-service-dev-task-role" {
         }
         EOF
 }
-resource "aws_iam_policy" "Example-ecommerce-service-dev-task-policy" {
-    name = "Example-ecommerce-service-dev-task-policy"
+resource "aws_iam_policy" "Example-service02-dev-task-policy" {
+    name = "Example-service02-dev-task-policy"
     path = "/"
-    description = "Grants permissions needed by the Examplewl Ecommerce Service tasks/service"
-    policy = templatefile("policy-docs/Example-ecommerce-service-dev-task-policy.tftpl", {queueARN = aws_sqs_queue.ecommerce-dev.arn})
+    description = "Grants permissions needed by the Example Service tasks/service"
+    policy = templatefile("policy-docs/Example-service02-dev-task-policy.tftpl", {queueARN = aws_sqs_queue.service02-dev.arn})
 }
 
-resource "aws_iam_role_policy_attachment" "Example-ecommerce-service-dev-task-policy-attachment" {
-    role = aws_iam_role.Example-ecommerce-service-dev-task-role.name
-    policy_arn = aws_iam_policy.Example-ecommerce-service-dev-task-policy.arn
+resource "aws_iam_role_policy_attachment" "Example-service02-dev-task-policy-attachment" {
+    role = aws_iam_role.Example-service02-dev-task-role.name
+    policy_arn = aws_iam_policy.Example-service02-dev-task-policy.arn
 }
-resource "aws_ecs_task_definition" "Example-ecommerce-service-dev" {
-    family = "Example-ecommerce-service-dev"
-    task_role_arn = aws_iam_role.Example-ecommerce-service-dev-task-role.arn
+resource "aws_ecs_task_definition" "Example-service02-dev" {
+    family = "Example-service02-dev"
+    task_role_arn = aws_iam_role.Example-service02-dev-task-role.arn
     execution_role_arn = aws_iam_role.ecs-task-execution-role.arn
     network_mode = "awsvpc"
     cpu = "256"
     memory = "512"
     requires_compatibilities = ["FARGATE"]
-    container_definitions = "${file("container-defs/ecommerce-service.json")}"
+    container_definitions = "${file("container-defs/service02.json")}"
 }
-resource "aws_lb_target_group" "Example-ecommerce-service-dev-tg" {
-    name = "Example-ecommerce-service-dev"
+resource "aws_lb_target_group" "Example-service02-dev-tg" {
+    name = "Example-service02-dev"
     port = 80
     protocol = "HTTP"
     target_type = "ip"
@@ -225,11 +225,11 @@ resource "aws_lb_target_group" "Example-ecommerce-service-dev-tg" {
         path = "/health"
     }
 
-    depends_on = [aws_alb.Example-ecommerce-service-dev-lb]
+    depends_on = [aws_alb.Example-service02-dev-lb]
 }
 
-resource "aws_alb" "Example-ecommerce-service-dev-lb" {
-    name = "Example-ecommerce-service-dev"
+resource "aws_alb" "Example-service02-dev-lb" {
+    name = "Example-service02-dev"
     internal = false
     load_balancer_type = "application"
 
@@ -242,8 +242,8 @@ resource "aws_alb" "Example-ecommerce-service-dev-lb" {
     security_groups = [aws_security_group.Example-dev-lbs.id]
 }
 
-resource "aws_alb_listener" "Example-ecommerce-service-dev-http-listener" {
-    load_balancer_arn = aws_alb.Example-ecommerce-service-dev-lb.arn
+resource "aws_alb_listener" "Example-service02-dev-http-listener" {
+    load_balancer_arn = aws_alb.Example-service02-dev-lb.arn
     port = "80"
     protocol = "HTTP"
 
@@ -256,21 +256,21 @@ resource "aws_alb_listener" "Example-ecommerce-service-dev-http-listener" {
         }
     }
 }
-resource "aws_alb_listener" "Example-ecommerce-service-dev-https-listener" {
-    load_balancer_arn = aws_alb.Example-ecommerce-service-dev-lb.arn
+resource "aws_alb_listener" "Example-service02-dev-https-listener" {
+    load_balancer_arn = aws_alb.Example-service02-dev-lb.arn
     port = "443"
     protocol = "HTTPS"
     certificate_arn = data.aws_acm_certificate.dev-cert.arn
 
     default_action {
         type = "forward"
-        target_group_arn = aws_lb_target_group.Example-ecommerce-service-dev-tg.arn
+        target_group_arn = aws_lb_target_group.Example-service02-dev-tg.arn
     }
 }
-resource "aws_ecs_service" "Example-ecommerce-service-dev" {
-    name = "Example-ecommerce-service-dev"
+resource "aws_ecs_service" "Example-service02-dev" {
+    name = "Example-service02-dev"
     cluster = aws_ecs_cluster.dev-cluster.id
-    task_definition = aws_ecs_task_definition.Example-ecommerce-service-dev.arn
+    task_definition = aws_ecs_task_definition.Example-service02-dev.arn
     desired_count = 1
     deployment_minimum_healthy_percent = 50
     deployment_maximum_percent = 200
@@ -293,8 +293,8 @@ resource "aws_ecs_service" "Example-ecommerce-service-dev" {
 }
 //****END SERVICE02 ###
 //****START SERVICE03****
-resource "aws_iam_role" "Example-report-dev-task-role" {
-  name = "Example-report-ecs-task-role"
+resource "aws_iam_role" "Example-service03-dev-task-role" {
+  name = "Example-service03-ecs-task-role"
 
   assume_role_policy = <<-EOF
         {
@@ -313,31 +313,31 @@ resource "aws_iam_role" "Example-report-dev-task-role" {
         EOF
 }
 
-resource "aws_iam_policy" "Example-report-dev-task-policy" {
-  name        = "Example-report-dev-task-policy"
+resource "aws_iam_policy" "Example-service03-dev-task-policy" {
+  name        = "Example-service03-dev-task-policy"
   path        = "/"
-  description = "Grants permissions needed by the Examplewl Reporting Service tasks/service"
-  policy      = templatefile("policy-docs/Example-report-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-reporting-bucket.arn })
+  description = "Grants permissions needed by the Examplewl service03 Service tasks/service"
+  policy      = templatefile("policy-docs/Example-service03-dev-task-policy.tftpl", { bucketARN = aws_s3_bucket.Example-service03-bucket.arn })
 }
 
-resource "aws_iam_role_policy_attachment" "Example-report-dev-task-policy-attachment" {
-  role       = aws_iam_role.Example-report-dev-task-role.name
-  policy_arn = aws_iam_policy.Example-report-dev-task-policy.arn
+resource "aws_iam_role_policy_attachment" "Example-service03-dev-task-policy-attachment" {
+  role       = aws_iam_role.Example-service03-dev-task-role.name
+  policy_arn = aws_iam_policy.Example-service03-dev-task-policy.arn
 }
-resource "aws_ecs_task_definition" "Example-report-dev" {
+resource "aws_ecs_task_definition" "Example-service03-dev" {
 
-  family                   = "Example-report-dev"
-  task_role_arn            = aws_iam_role.Example-report-dev-task-role.arn
+  family                   = "Example-service03-dev"
+  task_role_arn            = aws_iam_role.Example-service03-dev-task-role.arn
   execution_role_arn       = aws_iam_role.ecs-task-execution-role.arn
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
   requires_compatibilities = ["FARGATE"]
-  container_definitions    = file("container-defs/Example-report.json")
+  container_definitions    = file("container-defs/Example-service03.json")
 }
 
-resource "aws_lb_target_group" "Example-report-dev-tg" {
-  name        = "Example-report-dev"
+resource "aws_lb_target_group" "Example-service03-dev-tg" {
+  name        = "Example-service03-dev"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -348,11 +348,11 @@ resource "aws_lb_target_group" "Example-report-dev-tg" {
     path    = "/health"
   }
 
-  depends_on = [aws_alb.Example-report-dev-lb]
+  depends_on = [aws_alb.Example-service03-dev-lb]
 }
 
-resource "aws_alb" "Example-report-dev-lb" {
-  name               = "Example-report-dev"
+resource "aws_alb" "Example-service03-dev-lb" {
+  name               = "Example-service03-dev"
   internal           = false
   load_balancer_type = "application"
 
@@ -366,8 +366,8 @@ resource "aws_alb" "Example-report-dev-lb" {
 }
 
 //We should not be forwarding HTTP requests. Redirect to HTTPS
-resource "aws_alb_listener" "Example-report-dev-http-listener" {
-  load_balancer_arn = aws_alb.Example-report-dev-lb.arn
+resource "aws_alb_listener" "Example-service03-dev-http-listener" {
+  load_balancer_arn = aws_alb.Example-service03-dev-lb.arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -381,22 +381,22 @@ resource "aws_alb_listener" "Example-report-dev-http-listener" {
   }
 }
 
-resource "aws_alb_listener" "Example-report-dev-https-listener" {
-  load_balancer_arn = aws_alb.Example-report-dev-lb.arn
+resource "aws_alb_listener" "Example-service03-dev-https-listener" {
+  load_balancer_arn = aws_alb.Example-service03-dev-lb.arn
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = data.aws_acm_certificate.dev-cert.arn
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.Example-report-dev-tg.arn
+    target_group_arn = aws_lb_target_group.Example-service03-dev-tg.arn
   }
 }
 
-resource "aws_ecs_service" "Example-report-dev" {
-  name                               = "Example-reportingservice-dev"
+resource "aws_ecs_service" "Example-service03-dev" {
+  name                               = "Example-service03service-dev"
   cluster                            = aws_ecs_cluster.dev-cluster.id
-  task_definition                    = aws_ecs_task_definition.Example-report-dev.arn
+  task_definition                    = aws_ecs_task_definition.Example-service03-dev.arn
   desired_count                      = 1
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200

@@ -19,17 +19,17 @@ resource "aws_s3_bucket_acl" "Example-online-server-bucket-acl" {
     bucket = aws_s3_bucket.Example-online-server-bucket.id
     acl = "private"
 }
-//****START REPORTING SERVICE BUCKET****
-resource "aws_s3_bucket" "Example-reporting-bucket" {
-  bucket = "Example-report-service-07-26-2022"
+//****START service03 SERVICE BUCKET****
+resource "aws_s3_bucket" "Example-service03-bucket" {
+  bucket = "Example-service03-service-07-26-2022"
 }
 
-resource "aws_s3_bucket_acl" "Example-reporting-bucket-acl" {
-  bucket = aws_s3_bucket.Example-reporting-bucket.id
+resource "aws_s3_bucket_acl" "Example-service03-bucket-acl" {
+  bucket = aws_s3_bucket.Example-service03-bucket.id
   acl    = "private"
 }
 
-//****END REPORTING SERVICE BUCKET
+//****END service03 SERVICE BUCKET
 
 //****START CSV SERVICE BUCKET****
 resource "aws_s3_bucket" "Example-csv-service-bucket" {
