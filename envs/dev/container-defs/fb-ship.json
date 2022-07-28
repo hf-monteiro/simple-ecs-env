@@ -13,11 +13,11 @@
       "logConfiguration": {
         "logDriver": "awsfirelens",
         "options": {
-          "Name": "datadog",
+          "Name": "Example",
           "apikey": "15b65efe4a3333ce6edd9dc155cffadd",
           "provider": "ecs",
           "dd_service": "Example-shipping",
-          "Host": "http-intake.logs.datadoghq.com",
+          "Host": "http-intake.logs.Examplehq.com",
           "TLS": "on",
           "dd_source": "spring",
           "dd_tags": "project:fluentbit,env:dev,service:Example-shipping"
@@ -85,8 +85,8 @@
       ]
     },
     {
-      "image": "datadog/agent:latest",
-      "name": "datadog-agent",
+      "image": "Example/agent:latest",
+      "name": "Example-agent",
       "essential": true,
       "portMappings": [
         {
@@ -147,7 +147,7 @@
             },
             {
               "name": "DD_SITE",
-              "value": "datadoghq.com"
+              "value": "Examplehq.com"
             },
             {
               "name": "DD_TRACE_SAMPLE_RATE",
