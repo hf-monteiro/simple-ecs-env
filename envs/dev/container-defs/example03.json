@@ -1,0 +1,173 @@
+[
+    {
+      "image": "000000000000.dkr.ecr.us-east-1.amazonaws.com/Example-example:dev",
+      "name": "Example-example-dev",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awsfirelens",
+        "options": {
+          "Name": "Example",
+          "apikey": "0000000000000000",
+          "provider": "ecs",
+          "dd_service": "Example-example",
+          "Host": "http-intake.logs.Examplehq.com",
+          "TLS": "on",
+          "dd_source": "spring",
+          "dd_tags": "project:fluentbit,env:dev,service:Example-example"
+        }
+      },
+      "secrets": [
+        {
+          "name": "DATABASE_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_password"
+        },
+        {
+          "name": "DATABASE_PORT",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_port"
+        },
+        {
+          "name": "DATABASE_SERVER",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_server"
+        },
+        {
+          "name": "DATABASE_USERNAME",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/database_username"
+        },
+        {
+          "name": "Example_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/Example_key"
+        },
+        {
+          "name": "examplePO_CLIENT",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/examplepo_client"
+        },
+        {
+          "name": "examplePO_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:000000000000:secret:dev/Example-example/examplepo_secret"
+        }
+      ],
+      "environment": [
+        {
+          "name": "AWS_BUCKET",
+          "value": "Example-example-labels"
+        },
+        {
+          "name": "AWS_URL",
+          "value": "https://s3.us-east-1.amazonaws.com"
+        },
+        {
+          "name": "DD_ENV",
+          "value": "dev"
+        },
+        {
+          "name": "DD_SERVICE",
+          "value": "example"
+        },
+        {
+          "name": "DD_VERSION",
+          "value": "1.0.0"
+        },
+        {
+          "name": "Example_URL",
+          "value": "https://api-dev.Exampleonline.com/"
+        },
+        {
+          "name": "Example_VERSION",
+          "value": "v1/"
+        }
+      ]
+    },
+    {
+      "image": "Example/agent:latest",
+      "name": "Example-agent",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8126,
+          "hostPort": 8126,
+          "protocol": "tcp"
+        },
+        {
+          "containerPort": 8125,
+          "hostPort": 8125,
+          "protocol": "udp"
+        }
+      ],
+      "environment": [
+            {
+              "name": "DD_API_KEY",
+              "value": "000000000000000000"
+            },
+            {
+              "name": "DD_APM_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_APM_IGNORE_RESOURCES",
+              "value": "GET /health,GET /util/health"
+            },
+            {
+              "name": "DD_APM_NON_LOCAL_TRAFFIC",
+              "value": "true"
+            },
+            {
+              "name": "DD_CONTAINER_EXCLUDE",
+              "value": "name:ecs-agent"
+            },
+            {
+              "name": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC",
+              "value": "true"
+            },
+            {
+              "name": "DD_EXPVAR_PORT",
+              "value": "5100"
+            },
+            {
+              "name": "DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL",
+              "value": "true"
+            },
+            {
+              "name": "DD_LOGS_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_LOGS_INJECTION",
+              "value": "true"
+            },
+            {
+              "name": "DD_PROFILING_ENABLED",
+              "value": "true"
+            },
+            {
+              "name": "DD_SITE",
+              "value": "Examplehq.com"
+            },
+            {
+              "name": "DD_TRACE_SAMPLE_RATE",
+              "value": "1"
+            },
+            {
+              "name": "ECS_FARGATE",
+              "value": "true"
+            }
+        ]
+    },
+    {
+      "image": "amazon/aws-for-fluent-bit:stable",
+      "name": "log_router",
+      "essential": true,
+      "firelensConfiguration": {
+        "type": "fluentbit",
+        "options": {
+            "enable-ecs-log-metadata": "false"
+        }
+      }
+    }
+  ]
