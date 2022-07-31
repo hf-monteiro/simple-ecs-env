@@ -1,3 +1,4 @@
+# ECR creation with for_each
 locals {
  services = ["example01", "example02", "example03"]   
 }

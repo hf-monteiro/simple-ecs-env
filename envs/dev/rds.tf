@@ -1,4 +1,4 @@
-//Create a subnet group that can be shared amongst all private database instances
+//Create a subnet group to share with all the resources
 resource "aws_db_subnet_group" "private-db-subnets" {
   name       = "private-db-subnets"
   subnet_ids = [aws_subnet.private-subnets["private-1a"].id, aws_subnet.private-subnets["private-1b"].id, aws_subnet.private-subnets["private-1c"].id]

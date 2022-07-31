@@ -42,10 +42,9 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-addons-attach
   role       = aws_iam_role.ecs-task-execution-role.name
   policy_arn = aws_iam_policy.ecs-task-execution-addons.arn
 }
-
 //****END MAIN ECS CONFIGURATION****
-//****START SERVICE SPECIFIC ECS CONFIGURATION****
-//All service specific resources and configuration should be created here
+
+//****START ECS CONFIGURATION FOR EACH SPECIFIC SERVICE****
 //****START SERVICE01****
 resource "aws_iam_role" "Example-service01-dev-task-role" {
     name = "Example-service01-task-role"
@@ -119,7 +118,7 @@ resource "aws_alb" "Example-service01-dev-lb" {
   security_groups = [aws_security_group.Example-dev-lbs.id]
 }
 
-//We should not be forwarding HTTP requests. Redirect to HTTPS
+//Forwarding HTTP requests to HTTPS
 resource "aws_alb_listener" "Example-service01-dev-http-listener" {
   load_balancer_arn = aws_alb.Example-service01-dev-lb.arn
   port              = "80"
@@ -241,7 +240,7 @@ resource "aws_alb" "Example-service02-dev-lb" {
 
     security_groups = [aws_security_group.Example-dev-lbs.id]
 }
-
+//Forwarding HTTP requests to HTTPS
 resource "aws_alb_listener" "Example-service02-dev-http-listener" {
     load_balancer_arn = aws_alb.Example-service02-dev-lb.arn
     port = "80"
@@ -365,7 +364,7 @@ resource "aws_alb" "Example-service03-dev-lb" {
   security_groups = [aws_security_group.Example-dev-lbs.id]
 }
 
-//We should not be forwarding HTTP requests. Redirect to HTTPS
+//Forwarding HTTP requests to HTTPS
 resource "aws_alb_listener" "Example-service03-dev-http-listener" {
   load_balancer_arn = aws_alb.Example-service03-dev-lb.arn
   port              = "80"
