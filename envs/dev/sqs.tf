@@ -1,3 +1,4 @@
+//SQS resource creation
 resource "aws_sqs_queue" "service01-dev" {
     name = "Example-service01-dev.fifo"
     delay_seconds = 0

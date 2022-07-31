@@ -1,5 +1,5 @@
 //****START MAIN VPC CONFIG****
-//This section should not be changed without reason
+//This section we can configure the VPC specifics if needed 
 resource "aws_vpc" "Example-dev" {
   cidr_block       = "172.42.0.0/16"
   instance_tenancy = "default"
@@ -47,8 +47,7 @@ resource "aws_eip" "nat_gateway_eip" {
   ]
 }
 
-//Because of cost, I am only doing 1 NAT gateway for now. I have not seen evidence that we need
-//the redundancy of extras, but they can easily be added here if needed in the future.
+//NAT gateway creation. If needed, we can create more resources
 resource "aws_nat_gateway" "nat-gateway-1a" {
   allocation_id = aws_eip.nat_gateway_eip.allocation_id
   subnet_id     = aws_subnet.public-subnets["public-1a"].id
@@ -98,14 +97,12 @@ resource "aws_route_table_association" "private-route-association" {
 //****END MAIN VPC CONFIG****
 
 //****START SECURITY GROUPS****
-//This section contains all of the security groups used throughout the VPC.
-//Any new security groups should be added here.
+//This section contains all of the security groups used in the VPC.
 resource "aws_security_group" "Example-dev-lbs" {
   name        = "Example-dev-lbs"
   description = "Security group for use with load balancers in the public subnets"
   vpc_id      = aws_vpc.Example-dev.id
 
-  //Only adding egress as it is going to be set to allow everything outbound. Inbound will be invidiual rules resources
   egress {
     from_port   = 0
     to_port     = 0

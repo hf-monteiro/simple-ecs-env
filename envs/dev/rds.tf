@@ -4,7 +4,7 @@ resource "aws_db_subnet_group" "private-db-subnets" {
   subnet_ids = [aws_subnet.private-subnets["private-1a"].id, aws_subnet.private-subnets["private-1b"].id, aws_subnet.private-subnets["private-1c"].id]
 }
 //****RDS CLUSTER AND INSTANCE CONFIG****
-//All RDS clusters and instances should be created below. They should be grouped by the service
+//All RDS clusters for each service
 //****START example SERVICE01 RDS CONFIG****
 resource "aws_rds_cluster" "Example-service01-dev" {
   cluster_identifier           = "Example-service01-dev"

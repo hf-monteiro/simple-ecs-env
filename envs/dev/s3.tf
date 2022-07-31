@@ -1,3 +1,4 @@
+//S3 Buckets creation 
 //****START SERVICE01 BUCKET****
 resource "aws_s3_bucket" "Example-service01-bucket" {
   bucket = "Example-bucket01"
@@ -7,7 +8,6 @@ resource "aws_s3_bucket_acl" "Example-service01-bucket-acl" {
   bucket = aws_s3_bucket.Example-service01-bucket.id
   acl    = "private"
 }
-
 //****END SERVICE01 BUCKET
 //****START  SERVICE02 BUCKET****
 resource "aws_s3_bucket" "Example-service02-bucket" {
